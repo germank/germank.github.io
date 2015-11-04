@@ -94,6 +94,12 @@
   border-bottom-left-radius: 50%;
 }
 
+.timeline-badge > i.fa {
+ color: #fff;
+ margin-top: 10px;
+ margin-right: 0px;
+}
+
 .timeline > li.timeline-inverted > .timeline-panel {
   float: right;
 }
