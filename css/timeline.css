@@ -96,8 +96,8 @@
 
 .timeline-badge > i.fa {
  color: #fff;
- margin-top: 10px;
- margin-right: 0px;
+ margin-top: 12px;
+ margin-right: -3px;
 }
 
 .timeline > li.timeline-inverted > .timeline-panel {
