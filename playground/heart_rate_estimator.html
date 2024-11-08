@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Rate Estimator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        #rate {
+            font-size: 2em;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h1>Estimated Heart Rate</h1>
+        <p>Put you hand where you can feel your heart and press the space bar every time you feel it beat to compute the beats per minute</p>
+        <p id="rate">0 beats/minute</p>
+    </div>
+
+    <script>
+        let beatCount = 0;
+        let startTime = null;
+        
+        document.addEventListener("keydown", (event) => {
+            if (event.code === "Space") {
+                event.preventDefault();
+                
+                // Start timer on the first beat
+                if (!startTime) {
+                    startTime = Date.now();
+                }
+                
+                // Increment beat count
+                beatCount++;
+                
+                // Calculate rate in beats per minute
+                const elapsedTime = (Date.now() - startTime) / 60000; // convert ms to minutes
+                const rate = (beatCount / elapsedTime).toFixed(2);
+                
+                // Update rate on page
+                document.getElementById("rate").textContent = `${rate} beats/minute`;
+            }
+        });
+    </script>
+
+</body>
+</html>
+
