@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heart Rate Estimator</title>
+    <title>Heart Beat Rate</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,42 +18,61 @@
             font-size: 2em;
             color: #4CAF50;
         }
+        #touch-area {
+            width: 100%;
+            height: 100vh;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
 
-    <div>
-        <h1>Estimated Heart Rate</h1>
-        <p>Put you hand where you can feel your heart and press the space bar every time you feel it beat to compute the beats per minute</p>
-        <p id="rate">0 beats/minute</p>
+    <div id="touch-area">
+        <div>
+            <h1>Heart Beat Rate</h1>
+        <p>Put you hand where you can feel your heart and press the space bar or touch the screen every time you feel it beat to compute the beats per minute</p>
+            <p id="rate">0 beats/minute</p>
+        </div>
     </div>
 
     <script>
         let beatCount = 0;
         let startTime = null;
-        
+
+        function handleBeat() {
+            // Start timer on the first beat
+            if (!startTime) {
+                startTime = Date.now();
+            }
+
+            // Increment beat count
+            beatCount++;
+
+            // Calculate rate in beats per minute
+            const elapsedTime = (Date.now() - startTime) / 60000; // convert ms to minutes
+            const rate = (beatCount / elapsedTime).toFixed(2);
+
+            // Update rate on page
+            document.getElementById("rate").textContent = `${rate} beats/minute`;
+        }
+
+        // Detect spacebar presses for desktop
         document.addEventListener("keydown", (event) => {
             if (event.code === "Space") {
                 event.preventDefault();
-                
-                // Start timer on the first beat
-                if (!startTime) {
-                    startTime = Date.now();
-                }
-                
-                // Increment beat count
-                beatCount++;
-                
-                // Calculate rate in beats per minute
-                const elapsedTime = (Date.now() - startTime) / 60000; // convert ms to minutes
-                const rate = (beatCount / elapsedTime).toFixed(2);
-                
-                // Update rate on page
-                document.getElementById("rate").textContent = `${rate} beats/minute`;
+                handleBeat();
             }
+        });
+
+        // Detect screen taps for mobile
+        document.getElementById("touch-area").addEventListener("touchstart", (event) => {
+            event.preventDefault();
+            handleBeat();
         });
     </script>
 
 </body>
 </html>
-
